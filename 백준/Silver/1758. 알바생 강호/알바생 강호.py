@@ -2,7 +2,7 @@ import sys
 read = sys.stdin.readline
 
 N = int(read())
-tips = [int(input()) for _ in range(N)]
+tips = [int(read()) for _ in range(N)]
 
 tips.sort(reverse=True)
 
@@ -14,4 +14,3 @@ for t in tips:
     index += 1
 
 print(sum)
-
