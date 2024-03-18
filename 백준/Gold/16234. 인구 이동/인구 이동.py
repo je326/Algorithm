@@ -1,44 +1,53 @@
+from collections import deque
 import sys
-from collections import deque 
-N, L, R = map(int, sys.stdin.readline().split())
-pan = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
-# 연합이 될 수 있는지?를 확인하고 만약 된다면 하나로 묶어 인구수/칸의 개수를 구하고 각 칸에 값을 넣는다.
-# 이를 연합이 될 수 없을 때까지 반복한다.
-# 그 때 소요된 날짜를 출력한다.
-q = deque()
-dx = [1,0,-1,0]
-dy = [0,1,0,-1]
-def bfs(x,y):
-    q.append((x,y))
-    union = []
-    union.append((x,y))
-    while q:
-        a,b = q.popleft()
+
+input = sys.stdin.readline
+
+queue = deque([])
+def bfs(v):
+    queue.append(v)
+    opened_countries = [(v[0], v[1])]
+
+    while queue:
+        v = queue.popleft()
+
         for i in range(4):
-            na = a + dx[i]
-            nb = b + dy[i]
-            if na>=N or nb>=N or nb<0 or na<0 or visited[na][nb]==1:
-                continue
-            if R>=abs(pan[a][b]-pan[na][nb])>=L:
-                visited[na][nb] = 1
-                q.append((na,nb))
-                union.append((na,nb))
-    if len(union)<=1:
+            new_v = (v[0]+dx[i], v[1]+dy[i])
+            if ((0 <= new_v[0] < N) and (0 <= new_v[1] < N) and (L <= abs(graph[v[0]][v[1]] - graph[new_v[0]][new_v[1]]) <= R)
+                    and not visited[new_v[0]][new_v[1]]):
+                queue.append(new_v)
+                opened_countries.append((new_v[0], new_v[1]))
+                visited[new_v[0]][new_v[1]] = True
+
+    if len(opened_countries) > 1:
+        result = sum(graph[c[0]][c[1]] for c in opened_countries) // len(opened_countries)
+        for c in opened_countries:
+            graph[c[0]][c[1]] = result
+
+        return 1
+    else:
         return 0
-    result=sum(pan[a][b] for a,b in union)//len(union)
-    for a,b in union:
-        pan[a][b] = result
-    return 1
-day = 0
-while 1:
-    stop = 0
-    visited = [[0]*N for _ in range(N)]
+
+
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+
+N, L, R = map(int, input().split())
+graph = [list(map(int, input().split())) for _ in range(N)]
+
+ans = 0
+while True:
+    move = False
+    visited = [[False for _ in range(N)] for _ in range(N)]
+
     for i in range(N):
         for j in range(N):
-            if visited[i][j] == 0:
-                visited[i][j] = 1
-                stop += bfs(i,j)
-    if stop==0:
+            if not visited[i][j]:
+                visited[i][j] = True
+                move |= bfs((i, j))
+    if move:
+        ans += 1
+    else:
         break
-    day += 1
-print(day)
+
+print(ans)
