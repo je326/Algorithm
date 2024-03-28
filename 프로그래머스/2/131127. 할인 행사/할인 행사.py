@@ -11,6 +11,6 @@ def solution(want, number, discount):
                 break
                 
         if buy:
-            answer +=1
-                
+            answer += 1
+                 
     return answer
