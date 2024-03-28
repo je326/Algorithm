@@ -1,10 +1,10 @@
 # [level 2] 할인 행사 - 131127 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/131127#qna) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/131127) 
 
 ### 성능 요약
 
-메모리: 10.2 MB, 시간: 0.01 ms
+메모리: 10.1 MB, 시간: 0.02 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 03월 28일 12:13:00
+2024년 03월 28일 14:15:42
 
 ### 문제 설명
 
