@@ -10,7 +10,7 @@ parent = [i for i in range(N+1)]
 
 def find(v):
     if parent[v] != v:
-        return find(parent[v])
+        parent[v] = find(parent[v])
     return parent[v]
 
 def union(a, b):
