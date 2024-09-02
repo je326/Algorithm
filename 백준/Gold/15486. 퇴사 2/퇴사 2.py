@@ -2,14 +2,19 @@ import sys
 input = sys.stdin.readline
 
 N = int(input())
-schedule = [list(map(int, input().split())) for _ in range(N)]
-dp = [0] * (N+1)
-
-profit = 0
+schedule = [0] * (N+1)
 for i in range(N):
-    profit = max(dp[i], profit)
-    if i + schedule[i][0] > N:
-        continue
-    dp[i + schedule[i][0]] = max(profit + schedule[i][1], dp[i + schedule[i][0]])
+    T, P = map(int, input().split())
+    schedule[i+1] = (T, P)
+
+dp = [0] * (N+2)
+
+for i in range(1, N+1):
+    T, P = schedule[i]
+
+    dp[i] = max(dp[i], dp[i-1])
+
+    if (i + T - 1 <= N):
+        dp[i+T] = max(dp[i+T], P + dp[i])
     
 print(max(dp))
